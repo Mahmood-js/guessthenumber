@@ -6,20 +6,20 @@
  * DONE: Create a function called displayResult to move the logic for if the guess is too high, too low, or correct
  * DONE: Complete the showYouWon, showNumberAbove, showNumberBelow
  * DONE: Use the showYouWon... functions within displayResult to display the correct dialog
- * TODO: Save the guess history in a variable called guess
- * TODO: Display the guess history using displayHistory() function
- * TODO: Use the initGame() function to restart the game
+ * DONE: Save the guess history in a variable called guess
+ * DONE: Display the guess history using displayHistory() function
+ * DONE: Use the initGame() function to restart the game
  */
 
-// Variable to store the list of guesses 
+// Variable to store the list of guesses
+let guesses = [];
 
 // Variable for store the correct random number 
 correctNumber = getRandomNumber();
 
-
 window.onload = function () {
   document.getElementById("number-submit").addEventListener("click", playGame);
-  document.getElementById("restart-game").addEventListener("click", initGame)
+  document.getElementById("restart-game").addEventListener("click", initGame);
 }
 
 /**
@@ -29,6 +29,8 @@ function playGame() {
   // *CODE GOES BELOW HERE *
   let numberGuess = document.getElementById("number-guess").value;
   displayResult(numberGuess);
+  saveGuessHistory(numberGuess);
+  displayHistory();
 }
 
 /**
@@ -53,6 +55,10 @@ function displayResult(numberGuess) {
  */
 function initGame() {
   // *CODE GOES BELOW HERE *
+  correctNumber = getRandomNumber();
+  document.getElementById("result").innerHTML = "";
+  guesses = [];
+  displayHistory();
 }
 
 /**
@@ -79,20 +85,25 @@ function getRandomNumber() {
  */
 function saveGuessHistory(guess) {
   // *CODE GOES BELOW HERE *
+  guesses.push(guess);
 }
 
 /**
  * Display guess history to user
  * HTML TO USE:
  * <ul class='list-group'>
- *  <li class='list-group-item'>You guessed {number}</li
+ *  <li class='list-group-item'>You guessed {number}</li>
  * </ul>
  * HINT: use while loop and string concatentation to create a list of guesses
  */
 function displayHistory() {
-  let index; // TODO
+  let index = guesses.length - 1; // TODO
   let list = "<ul class='list-group'>";
   // *CODE GOES BELOW HERE *
+  while (index >= 0) {
+    list += "<li class='list-group-item'>You guessed " + guesses[index] + "</li>";
+    index--;
+  }
   list += '</ul>'
   document.getElementById("history").innerHTML = list;
 }
